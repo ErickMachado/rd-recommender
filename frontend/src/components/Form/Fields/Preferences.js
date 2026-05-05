@@ -1,6 +1,7 @@
 // Preferences.js
 
-import React, { useState } from 'react';
+import React from 'react';
+import { Settings2 } from 'lucide-react';
 import Checkbox from '../../shared/Checkbox';
 
 function Preferences({
@@ -8,26 +9,26 @@ function Preferences({
   selectedPreferences = [],
   onPreferenceChange,
 }) {
-  const [currentPreferences, setCurrentPreferences] = useState(selectedPreferences)
-
   const handlePreferenceChange = (preference) => {
-    const updatedPreferences = currentPreferences.includes(preference)
-      ? currentPreferences.filter((pref) => pref !== preference)
-      : [...currentPreferences, preference];
+    const updatedPreferences = selectedPreferences.includes(preference)
+      ? selectedPreferences.filter((pref) => pref !== preference)
+      : [...selectedPreferences, preference];
 
-    setCurrentPreferences(updatedPreferences);
     onPreferenceChange(updatedPreferences);
   };
 
   return (
     <div className="mb-4">
-      <h2 className="text-lg font-bold mb-2">Preferências:</h2>
+      <div className="flex gap-2 items-center mb-2">
+        <Settings2 size={20} className="text-zinc-400" />
+        <h2 className="text-lg text-zinc-950 font-bold">Preferências:</h2>
+      </div>
       <ul>
         {preferences.map((preference, index) => (
           <li key={index} className="mb-2">
             <Checkbox
               value={preference}
-              checked={currentPreferences.includes(preference)}
+              checked={selectedPreferences.includes(preference)}
               onChange={() => handlePreferenceChange(preference)}
               className="text-blue-500"
             >

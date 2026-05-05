@@ -1,27 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { WandSparkles } from 'lucide-react';
 import Checkbox from '../../shared/Checkbox';
 
 function Features({ features, selectedFeatures = [], onFeatureChange }) {
-  const [currentFeatures, setCurrentFeatures] = useState(selectedFeatures)
-
   const handleFeatureChange = (feature) => {
-    const updatedFeatures = currentFeatures.includes(feature)
-      ? currentFeatures.filter((pref) => pref !== feature)
-      : [...currentFeatures, feature];
+    const updatedFeatures = selectedFeatures.includes(feature)
+      ? selectedFeatures.filter((pref) => pref !== feature)
+      : [...selectedFeatures, feature];
 
-    setCurrentFeatures(updatedFeatures);
     onFeatureChange(updatedFeatures);
   };
 
   return (
     <div className="mb-4">
-      <h2 className="text-lg font-bold mb-2">Funcionalidades:</h2>
+      <div className="flex gap-2 items-center mb-2">
+        <WandSparkles size={20} className="text-zinc-400" />
+        <h2 className="text-lg text-zinc-950 font-bold">Funcionalidades:</h2>
+      </div>
       <ul>
         {features.map((feature, index) => (
           <li key={index} className="mb-2">
             <Checkbox
               value={feature}
-              checked={currentFeatures.includes(feature)}
+              checked={selectedFeatures.includes(feature)}
               onChange={() => handleFeatureChange(feature)}
               className="text-green-500"
             >

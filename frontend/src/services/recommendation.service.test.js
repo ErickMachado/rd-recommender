@@ -9,7 +9,7 @@ describe('recommendationService', () => {
       selectedRecommendationType: 'SingleProduct',
     };
 
-    const recommendations = recommendationService.getRecommendations(
+    const recommendations = recommendationService.recommend(
       formData,
       mockProducts,
     );
@@ -32,7 +32,7 @@ describe('recommendationService', () => {
       selectedRecommendationType: 'MultipleProducts',
     };
 
-    const recommendations = recommendationService.getRecommendations(
+    const recommendations = recommendationService.recommend(
       formData,
       mockProducts,
     );
@@ -57,7 +57,7 @@ describe('recommendationService', () => {
       selectedRecommendationType: 'SingleProduct',
     };
 
-    const recommendations = recommendationService.getRecommendations(
+    const recommendations = recommendationService.recommend(
       formData,
       mockProducts,
     );
@@ -75,12 +75,36 @@ describe('recommendationService', () => {
       selectedRecommendationType: 'SingleProduct',
     };
 
-    const recommendations = recommendationService.getRecommendations(
+    const recommendations = recommendationService.recommend(
       formData,
       mockProducts,
     );
 
     expect(recommendations).toHaveLength(1);
     expect(recommendations[0].name).toBe('RD Conversas');
+  });
+
+  test('Retorna a pontuação correta das recomendações de acordo com as preferências e funcionalidades', () => {
+    const formData = {
+      selectedPreferences: [
+        'Personalização de funis de vendas',
+        'Integração fácil com ferramentas de e-mail',
+      ],
+      selectedFeatures: [
+        'Análise de retorno sobre investimento (ROI) de campanhas',
+      ],
+      selectedRecommendationType: 'MultipleProducts',
+    };
+
+    const recommendations = recommendationService.recommend(
+      formData,
+      mockProducts,
+    );
+
+    expect(recommendations).toHaveLength(2);
+    expect(recommendations[0].name).toBe('RD Station CRM');
+    expect(recommendations[0].score).toBe(2);
+    expect(recommendations[1].name).toBe('RD Station Marketing');
+    expect(recommendations[1].score).toBe(1);
   });
 });

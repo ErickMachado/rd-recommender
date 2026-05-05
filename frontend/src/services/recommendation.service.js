@@ -11,32 +11,46 @@ const DEFAULT_RECOMMENDATION_OPTIONS = {
 };
 
 export class RecommendationService {
-  getRecommendations(options = DEFAULT_RECOMMENDATION_OPTIONS, products) {
+  recommend(options = DEFAULT_RECOMMENDATION_OPTIONS, products) {
     const filters = new Set([
       ...(options.selectedFeatures ?? []),
       ...(options.selectedPreferences ?? []),
     ]);
     const isSingleProduct =
       options.selectedRecommendationType === RECOMMENDATION_TYPE.SingleProduct;
+    const scores = this.#createMatchingScore(products, filters);
+    const rank = this.#rankProducts(scores);
 
-    const recommendations = [];
+    return isSingleProduct ? [rank[0]] : rank;
+  }
+
+  #createMatchingScore(products, filters) {
+    const scores = new Map();
     for (const product of products) {
-      const items = [...product.features, ...product.preferences];
-      let matches = items.some((feature) => filters.has(feature));
+      const features = [...product.features, ...product.preferences];
 
-      if (matches && isSingleProduct) {
-        const currentLatest = recommendations.at(0);
-        const isLatest = product.id > (currentLatest?.id ?? -1);
-
-        if (isLatest) recommendations[0] = product;
-
-        continue;
+      let score = 0;
+      for (const feature of features) {
+        if (filters.has(feature)) {
+          score += 1;
+        }
       }
 
-      if (matches) recommendations.push(product);
+      if (score === 0) continue;
+      scores.set(product.id, { ...product, score });
     }
 
-    return recommendations;
+    return scores;
+  }
+
+  #rankProducts(products) {
+    const rank = [...products.values()].sort((productA, productB) => {
+      if (productA.score === productB.score) return productB.id - productA.id;
+
+      return productB.score - productA.score;
+    });
+
+    return rank;
   }
 }
 
