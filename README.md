@@ -1,4 +1,16 @@
-# Teste Técnico - Recomendador de Produtos RD Station
+<div align="center">
+  <img src="docs/assets/logo.svg" width="120" />
+  <h1>Recomendador de Produtos RD Station</h1>
+  <img src="https://img.shields.io/github/license/ErickMachado/rd-recommender?style=for-the-badge&labelColor=%2309090b&color=%2322DCFF" />
+</div>
+
+## Preview
+
+![](docs/assets/preview-1.png)
+![](docs/assets/preview-2.png)
+![](docs/assets/preview-3.png)
+
+## Descrição
 
 Este projeto é parte do teste técnico para a vaga de desenvolvedor front-end na RD Station. O objetivo principal é implementar a lógica de recomendação de produtos RD Station em uma aplicação web existente.
 
@@ -69,10 +81,23 @@ Para completar este teste, você deve concentrar-se principalmente em três arqu
 
 ## Como Executar
 
-1. Clone o repositório: `git clone <URL_DO_REPOSITORIO>`
-2. Instale as dependências: `yarn install`
-3. Para instalar o projeto, execute o script `./install.sh`
-4. Inicie a aplicação: `yarn start`
+1. Clone o repositório com o comando:
+
+```sh
+$ git clone git@github.com:ErickMachado/rd-recommender.git
+```
+
+2. Instale todas as dependências do projeto com:
+
+```sh
+$ ./install.sh
+```
+
+3. Inicie simultâneamente o back e o front-end com:
+
+```sh
+$ yarn dev
+```
 
 ### Scripts Disponíveis
 
@@ -92,6 +117,16 @@ Para completar este teste, você deve concentrar-se principalmente em três arqu
 7. O serviço deve ser modular e facilmente extensível para futuras atualizações e adições de funcionalidades.
 
 Certifique-se de que todos os critérios de aceite são atendidos durante o desenvolvimento do projeto.
+
+## Detalhes da implementação
+
+- Ao receber as preferências e funcionalidades selecionadas pelo usuário, a função [createMatchingScore](https://github.com/ErickMachado/rd-recommender/blob/master/frontend/src/services/recommendation.service.js#L27) vai atribuir uma pontuação para cada produto.
+- Após o cálculo da pontuação, a função [rankProducts](https://github.com/ErickMachado/rd-recommender/blob/master/frontend/src/services/recommendation.service.js#L46) vai ordenar os produtos em ordem decrescente utilizando a pontuação como fator primário de ordenação:
+  - Caso dois ou mais produtos tenham a mesma pontuação, o critério de desempate será a propriedade `id` dos produtos.
+  - O produto com o maior ID vence.
+- Caso o usuário esteja no modo `SingleProduct`, apenas o primeiro item do rank será retornado na lista.
+- O product com a maior taxa de match vai aparecer em destaque na UI.
+- A UI foi reformulada para uma melhor experiência de navegação
 
 ## Autor
 
