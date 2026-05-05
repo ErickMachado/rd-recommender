@@ -8,7 +8,6 @@
 
 ![](docs/assets/preview-1.png)
 ![](docs/assets/preview-2.png)
-![](docs/assets/preview-3.png)
 
 ## Descrição
 
@@ -84,19 +83,19 @@ Para completar este teste, você deve concentrar-se principalmente em três arqu
 1. Clone o repositório com o comando:
 
 ```sh
-$ git clone git@github.com:ErickMachado/rd-recommender.git
+git clone git@github.com:ErickMachado/rd-recommender.git
 ```
 
 2. Instale todas as dependências do projeto com:
 
 ```sh
-$ ./install.sh
+./install.sh
 ```
 
 3. Inicie simultâneamente o back e o front-end com:
 
 ```sh
-$ yarn dev
+yarn dev
 ```
 
 ### Scripts Disponíveis

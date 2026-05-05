@@ -24,7 +24,7 @@ function RecommendationList({ recommendations = [] }) {
           <RecommendationItem
             key={recommendation.id}
             recommendation={recommendation}
-            highlighted={index === 0}
+            variant={index === 0 ? "highlighted" : "default"}
           />
         ))}
       </ul>
